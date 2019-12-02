@@ -14,11 +14,12 @@ def connect():
 def on_connect(client, userdata, flags, rc):
 	print("Connected to MQTT")
 	client.subscribe(config.MQTT_TOPIC)
-	send("Connected from wifi")
+	send("Connected to MQTT on WIFI MODE")
 def on_message(client,userdata,msg):
 	data = msg.payload.decode()
-	print(data)
-	mf.run(data)
+	if config.DEBUG == True:
+		print("DEBUG|MQTT_MSG_IN|",data)
+	mf.run(data,__name__)
 def send(message):
-	print("publish",message)
+	print("Sending message",message)
 	publish.single(config.MQTT_TOPIC,message,hostname=config.MQTT_HOST)

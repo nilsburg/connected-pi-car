@@ -7,8 +7,6 @@ import network_check
 import mqtt_wifi
 import mqtt_functions
 position = gps.get_position()
-print("POS1",position)
-#print("spliT",gps.parse(position))
 MQTT = None
 if config.wifi == True:
 	print("WIFI MODE")
@@ -16,5 +14,8 @@ if config.wifi == True:
 else:
 	print("GPRS MODE")
 	MQTT = mqtt_sim
-MQTT.connect()
-MQTT.run(MQTT)
+#MQTT.connect()
+def lala(data):
+	print("REC",data)
+at.getStream("AT+CGNSTST=1",60,lala)
+#mqtt_functions.run(MQTT)

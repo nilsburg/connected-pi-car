@@ -5,5 +5,6 @@ MQTT_PORT = "1883"
 MQTT_TOPIC = "picar/gps"
 APN="internet"
 SERVER_IP="104.155.19.201"
+DEBUG=True
 wifi=True
 #print("config"+serial)

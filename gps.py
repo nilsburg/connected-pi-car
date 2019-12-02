@@ -25,4 +25,6 @@ def get_position():
 	response= at.send('AT+CGNSINF','+CGNSINF: ',1)
 	parsed = parse(response.decode())
 	return parsed
-
+def track():
+	power_on()
+	
