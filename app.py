@@ -7,6 +7,7 @@ import network_check
 import mqtt_wifi
 import mqtt_functions
 import at
+import sys
 position = gps.get_position()
 MQTT = None
 if config.wifi == True:
@@ -22,5 +23,11 @@ def lala(data):
     print("REC", data)
 
 
-at.getStream("AT+CGNSTST=1", 1, lala)
+def fn(string):
+	print("DD",string)
+def stopTst(sig,frame):
+	print("Stop CGNSTST")
+	at.send("AT+CGNSTST=0","OK",1)
+	sys.exit(0)
+gps.trackPosition(5,fn)
 # mqtt_functions.run(MQTT)

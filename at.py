@@ -2,6 +2,8 @@ import config
 import serial
 import time
 import re
+import signal
+import sys
 ser = serial.Serial(config.SERIAL, config.BAUDRATE)
 ser.flushInput()
 
@@ -25,30 +27,20 @@ def send(command, back, timeout):
         return False
 
 
-def getStream(command, timeout, callback):
+def watch(command, timeout, callback,interrupHandler):
     buffer = ''
     ser.write((command + '\r\n').encode())
     time.sleep(timeout)
-    row = 0
-    limit = 5000
     line = ''
-    line2 = ''
-    while False:
+    while True:
         bytes = ser.inWaiting()
         buffer = ser.read(bytes)
 	line = line+buffer
 	if "\n" in buffer:
-		#line = line.encode()
-		#print("NEW LINE",line)
+		callback(line)
 		split = line.split(",")
-		#print(split)
-		if split[0] == '$GNGGA':
-			print(split)
 		line = ''
-	row = row+1
-    #print(line.decode())
-    ser.write(('AT+CGNSTST=0\r\n').encode())
-    #ser.close()
+	signal.signal(signal.SIGINT,interrupHandler)
 
 
 def close():

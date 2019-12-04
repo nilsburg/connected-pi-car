@@ -6,7 +6,7 @@ import mqtt_sim
 import sys
 import json
 
-
+trackPos = False
 def run(data, mqtt_module):
     mqtt = sys.modules[mqtt_module]
     data = data.encode('utf-8')
@@ -19,8 +19,8 @@ def run(data, mqtt_module):
     command = split[0]
     # params = split[1].split(";")
     # callback = split[2]
-    if command == "locate":
-        position = gps.get_position()
+    if command == "track":
+        position = gps.track()
         if config.DEBUG == True:
             print("Sending Position", position)
         data = json.dumps(position)
