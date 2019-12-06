@@ -6,8 +6,9 @@ MQTT_TOPIC = "picar/gps"
 MAIN_TOPIC = "picar/main"
 COMMAND_TOPIC = "picar/command"
 GPS_TOPIC = "picar/gps"
-APN="internet"
-SERVER_IP="104.155.19.201"
-DEBUG=True
-wifi=True
-#print("config"+serial)
+APN = "internet"
+SERVER_IP = "104.155.19.201"
+DEBUG = True
+MODE = 'test'
+wifi = True
+
