@@ -1,3 +1,5 @@
+import urllib
+
 from classes.AT import AT
 from classes.AT_Test import AT_Test
 from classes.GPS import GPS
@@ -7,6 +9,7 @@ import time
 import signal
 import sys
 import datetime
+import socket
 
 
 class App:
@@ -19,12 +22,14 @@ class App:
         self.gps = None
 
     def run(self):
-        if self.config.MODE == 'test':
-            print("Running AT Test mode")
-            self.at = AT_Test(self.config)
-        else:
+        self.check_network()
+        self.check_env()
+        if self.config.is_rpi:
             print("Running AT Serial mode")
             self.at = AT(self.config)
+        else:
+            print("Running AT Test mode")
+            self.at = AT_Test(self.config)
         self.gps = GPS(self.at)
         self.mqtt = Mqtt(self.config, self.at, self.gps)
         self.gps.power_on()
@@ -40,6 +45,23 @@ class App:
         self.mqtt.send(self.date_string() + "|Manual exit", self.config.MAIN_TOPIC)
         self.mqtt.stop()
         sys.exit(0)
+
+    def check_network(self):
+        try:
+            socket.gethostbyaddr(self.config.SERVER_IP)
+            self.config.wifi = True
+            print("Wifi available")
+            return True
+        except:
+            self.config.wifi = False
+            return False
+
+    def check_env(self):
+        hostname = socket.gethostname()
+        if hostname == 'picar':
+            self.config.is_rpi = True
+        else:
+            self.config.is_rpi = False
 
     @staticmethod
     def date_string():
