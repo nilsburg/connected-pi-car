@@ -33,11 +33,7 @@ class App:
         self.mqtt.client.loop_start()
         while True:
             if self.mqtt.connected:
-                #self.mqtt.send("TEST")
                 pass
-            # time.sleep(2)
-
-        self.destroy(None, None)
 
     def destroy(self, sig, frame):
         print("Exiting")

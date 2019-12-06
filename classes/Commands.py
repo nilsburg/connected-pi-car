@@ -1,6 +1,9 @@
 import json
 import sys
+import threading
 import time
+
+tracking = False
 
 
 class Commands:
@@ -10,30 +13,33 @@ class Commands:
         self.mqtt = mqtt
         self.gps = mqtt.gps
         self.tracking = False
+        self.track_thread = threading.Thread(target=self.track_on)
 
     def run(self, command):
+        global tracking
         print("Running command " + command)
         if command == 'position':
             self.get_location()
         if command == 'track_on':
-            self.track_on()
+            tracking = True
+            self.track_thread.start()
         if command == 'track_off':
+            tracking = False
             self.track_off()
 
     def track_on(self):
-        self.tracking = True
         timer = 0
-        limit = 1000
-        t = Thread
-        while self.tracking and timer < limit:
-            print("Track", timer)
-            timer = timer+1
+        print("Track start")
+        while tracking:
+            print("Track", timer, self.tracking)
+            timer = timer + 1
             self.get_location()
-            #time.sleep(1)
+            time.sleep(1)
+        print("Track ended")
 
     def track_off(self):
         print("Stop tracking")
-        self.tracking = False
+        self.track_thread.join()
 
     def get_location(self):
         location = self.gps.get_position()
