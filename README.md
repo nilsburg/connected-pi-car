@@ -7,7 +7,7 @@ This project aims to develop a device to track your car.
 - Waveshare [SIM7000E NB-IoT HAT](https://www.waveshare.com/SIM7000E-NB-IoT-HAT.htm)
 - ODB2 device
 - M2M SIM Card [Things Mobile](https://www.thingsmobile.com/private/thingsmobile)
-- microsd card for the raspeberry pi
+- microsd card for the raspberry pi
 
 ### Software
 - Raspbian buster
@@ -23,7 +23,7 @@ Then we need to disable the Linux's use of console UART:
 ```
 sudo raspi-config
 ```
-Select option 5, __Inerfacing options__, then P6,__Serial__ and select __No__. Then exit raspi-config
+Select option 5, __Interfacing options__, then P6,__Serial__ and select __No__. Then exit raspi-config
 Then reboot.
 
 After this you should be able to communicate to the serial port, in my case it is __/dev/ttyS0__ and baudrate 9600.  
