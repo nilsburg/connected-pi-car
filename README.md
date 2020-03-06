@@ -37,6 +37,9 @@ AT+CGMM //checks the module name
 ```
 (to exit minicom press Ctrl+A and the select exit)
 
+### Wiki
+- [Remote Serial port with ser2net](https://github.com/nilsburg/connected-pi-car/wiki/Remote-serial-port-with-ser2net)
+
 ### TODO
 - Upload python samples
 - Write more documentation
