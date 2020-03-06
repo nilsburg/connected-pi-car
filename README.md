@@ -37,6 +37,9 @@ AT+CGMM //checks the module name
 ```
 (to exit minicom press Ctrl+A and the select exit)
 
+### Examples
+- [MQTT send position example](examples/mqtt_update_position.py) 
+
 ### Wiki
 - [Remote Serial port with ser2net](https://github.com/nilsburg/connected-pi-car/wiki/Remote-serial-port-with-ser2net)
 
@@ -48,3 +51,4 @@ AT+CGMM //checks the module name
 ### Reference:
 - https://www.raspberrypi.org/documentation/configuration/uart.md
 - https://www.waveshare.com/wiki/SIM7000E_NB-IoT_HAT
+- https://github.com/tmcadam/sim7000-tools
