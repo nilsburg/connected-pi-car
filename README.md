@@ -5,17 +5,43 @@ This project aims to develop a device to track your car.
 ### Hardware
 - [Raspberry PI Zero WH](https://www.raspberrypi.org/blog/zero-wh/). The same as the Raspberry PI Zero W but with headers.
 - Waveshare [SIM7000E NB-IoT HAT](https://www.waveshare.com/SIM7000E-NB-IoT-HAT.htm)
-- ODB2 device (TODO)
+- ODB2 device
+- M2M SIM Card [Things Mobile](https://www.thingsmobile.com/private/thingsmobile)
+- microsd card for the raspeberry pi
+
+### Software
+- Raspbian buster
+- python3
 
 ### Setup
-At this moment I only have the SIM700E HAT and it is possible to use it without the Raspberry Pi just connecting it through USB to your PC. Detailed instructions on how to make it work on Windows are [here](https://www.waveshare.com/wiki/File:SIM7000E-NB-IoT-HAT-Manual-EN.pdf).
+The first steps are to enable the rpi to access the serial port.
+First edit the file __/boot/config.txt__ and add
+```
+enable_uart=1
+```
+Then we need to disable the Linux's use of console UART:
+```
+sudo raspi-config
+```
+Select option 5, __Inerfacing options__, then P6,__Serial__ and select __No__. Then exit raspi-config
+Then reboot.
 
-There are two scripts (Python3):
-- device.py (this one is supposed to run in the raspberry pi)
-- client.py (this one sends the request to obtain the position)
+After this you should be able to communicate to the serial port, in my case it is __/dev/ttyS0__ and baudrate 9600.  
+[minicom](https://help.ubuntu.com/community/Minicom) is a great tool to communicate to the serial port:
+```
+sudo minicom -D /dev/ttyS0 -b 9600
+```
+Then you can start launching AT commands:
+```
+AT+CGMM //checks the module name
+```
+(to exit minicom press Ctrl+A and the select exit)
 
-The communication is done using MQTT. For this example I am using [HiveMQ](https://www.hivemq.com) a free MQTT broker to do the tests. But you can easily install a broker on your own server.
+### TODO
+- Upload python samples
+- Write more documentation
+- Add instructions to enable SIM card
 
-You can edit __device.py__ if you want to change the COM PORT (default 25 and baudrate 9600) on which the SIM7000E is connected and the MQTT config.
-
-Still lot of work to do!
+### Reference:
+- https://www.raspberrypi.org/documentation/configuration/uart.md
+- https://www.waveshare.com/wiki/SIM7000E_NB-IoT_HAT
