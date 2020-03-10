@@ -37,6 +37,14 @@ AT+CGMM //checks the module name
 ```
 (to exit minicom press Ctrl+A and the select exit)
 
+### Synchronize baud rate
+When powering the module and before sending any command the module needs to synchronize de baud rate.  
+The docs ([SIM7000 Series Ucart Application Note](https://simcom.ee/documents/SIM7000x/SIM7000%20Series%20UART%20Application%20Note_V1.00.pdf)) states:  
+> Host must send “AT” string to synchronize the module, if module matches the baud rate it will
+> respond with response: “OK”, if no response is reported, host must send the synchronize string
+> again until the response is received.
+
+
 ### Examples
 - [MQTT send position example](examples/mqtt_update_position.py) 
 
